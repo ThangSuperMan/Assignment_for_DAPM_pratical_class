@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./App.css";
 
 interface Employee {
@@ -19,7 +19,7 @@ function App() {
   const [employeeAddress, setEmployeeAddress] = React.useState<string>();
   const [selectedRoomEmployee, setSelectedRoomEmployee] =
     React.useState<string>();
-  const [selectedJobTitle] = React.useState<string>();
+  const [selectedJobTitle, setSelectedJobTitle] = React.useState<string>();
   // const employeeJobTitle = React.useRef<HTMLSelectElement>(null);
   // const employeeJobRoom = React.useRef<HTMLSelectElement>(null);
   const handleDeleteItem = (e: any) => {
@@ -60,12 +60,19 @@ function App() {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     console.log("handleSubmit ");
-    if (employeeId && employeeName && employeeAddress) {
+    if (
+      employeeId &&
+      employeeName &&
+      employeeAddress &&
+      selectedJobTitle &&
+      selectedRoomEmployee
+    ) {
       const employee: Employee = {
         id: employeeId,
         name: employeeName,
         address: employeeAddress,
         roomEmployee: selectedRoomEmployee,
+        jobTitle: selectedJobTitle,
       };
 
       setEmployees([...employees, employee]);
@@ -78,7 +85,15 @@ function App() {
     console.log("employeeId :>> ", employeeId);
     console.log("employeeName :>> ", employeeName);
     console.log("employeeAddress :>> ", employeeAddress);
-  }, [employeeId, employeeName, employeeAddress]);
+    console.log("selectedJobTitle :>> ", selectedJobTitle);
+    console.log("selectedRoomEmployee :>> ", selectedRoomEmployee);
+  }, [
+    employeeId,
+    employeeName,
+    employeeAddress,
+    selectedJobTitle,
+    selectedRoomEmployee,
+  ]);
 
   return (
     <div className="container">
@@ -136,64 +151,94 @@ function App() {
           onChange={(e: any) => setSelectedRoomEmployee(e.target.value)}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
         >
-          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-            Phòng ban
-          </label>
+          <option value="Phòng ban Kinh doanh">Phòng ban Kinh doanh</option>
+          <option value="Phòng ban Tài chính">Phòng ban Tài chính</option>
+          <option value="Phòng ban Kỹ thuật">Phòng ban Kỹ thuật</option>
+          <option value="Phòng ban Nhân sự">Phòng ban Nhân sự</option>
+          <option value="Phòng ban Quản lý chất lượng">
+            Phòng ban Quản lý chất lượng
+          </option>
+        </select>
+        <br />
+        <br />
+        <select
+          onChange={(e: any) => setSelectedJobTitle(e.target.value)}
+          id="roomEmployees"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
+        >
+          <option selected>
+            Chọn chức vụ công việc của phòng ban Kinh doanh
+          </option>
+          <option value="Giám đốc Kinh doanh">Giám đốc Kinh doanh</option>
           <option value="Trưởng phòng Kinh doanh">
             Trưởng phòng Kinh doanh
           </option>
           <option value="Nhân viên Kinh doanh">Nhân viên Kinh doanh</option>
-          <option value="Chuyên viên Marketing">Chuyên viên Marketing</option>
-          <option value="Chuyên viên Tư vấn">Chuyên viên Tư vấn</option>
         </select>
         <select
+          onChange={(e: any) => setSelectedJobTitle(e.target.value)}
           id="roomEmployees"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
         >
           <option selected>
             Chọn chức vụ công việc của phòng ban tài chính
           </option>
-          <option value="KD">Giám đốc Tài chính</option>
-          <option value="KT">Trưởng phòng Tài chính</option>
-          <option value="NS">Kế toán trưởng</option>
-          <option value="CL">Kế toán viên</option>
-          <option value="CL">Nhân viên Tài chính</option>
+          <option value="Giám đốc Tài chính">Giám đốc Tài chính</option>
+          <option value="Trưởng phòng Tài chính">Trưởng phòng Tài chính</option>
+          <option value="Kế toán trưởng">Kế toán trưởng</option>
+          <option value="Kế toán viên">Kế toán viên</option>
+          <option value="Nhân viên Tài chính">Nhân viên Tài chính</option>
         </select>
         <select
+          onChange={(e: any) => setSelectedJobTitle(e.target.value)}
           id="roomEmployees"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
         >
           <option selected>
             Chọn chức vụ công việc của phòng ban kỹ thuật
           </option>
-          <option value="KD">Giám đốc Kỹ thuật</option>
-          <option value="KT">Trưởng phòng Kỹ thuật</option>
-          <option value="NS">Nhân viên Thiết kế</option>
-          <option value="CL">Nhân viên Lập trình </option>
-          <option value="CL">Chuyên viên Kỹ thuật</option>
+          <option value="Giám đốc Kỹ thuật">Giám đốc Kỹ thuật</option>
+          <option value="Trưởng phòng Kỹ thuật">Trưởng phòng Kỹ thuật</option>
+          <option value="Nhân viên Thiết kế">Nhân viên Thiết kế</option>
+          <option value="Nhân viên Lập trình ">Nhân viên Lập trình </option>
+          <option value="Chuyên viên Kỹ thuật">Chuyên viên Kỹ thuật</option>
         </select>
         <select
+          onChange={(e: any) => setSelectedJobTitle(e.target.value)}
           id="roomEmployees"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
         >
-          <option selected>Chọn phòng ban</option>
-          <option value="KD">Phòng ban Kinh doanh</option>
-          <option value="KT">Phòng ban Kỹ thuật</option>
-          <option value="NS">Phòng ban Nhân sự</option>
-          <option value="CL">Phòng ban Quản lý chất lượng</option>
+          <option selected>Chọn chức vụ công việc của phòng ban Nhân sự</option>
+          <option value="Phòng ban Kinh doanh">Phòng ban Kinh doanh</option>
+          <option value="Phòng ban Kỹ thuật">Phòng ban Kỹ thuật</option>
+          <option value="Phòng ban Nhân sự">Phòng ban Nhân sự</option>
+          <option value="Phòng ban Quản lý chất lượng">
+            Phòng ban Quản lý chất lượng
+          </option>
         </select>
         <select
+          onChange={(e: any) => setSelectedJobTitle(e.target.value)}
           id="roomEmployees"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
         >
           <option selected>
             Chọn chức vụ công việc của phòng ban Quản lý chất lượng
           </option>
-          <option value="KD">Giám đốc Quản lý chất lượng</option>
-          <option value="KT">Trưởng phòng Kiểm định chất lượng</option>
-          <option value="NS">Nhân viên Kiểm định chất lượng</option>
-          <option value="CL">Nhân viên Quản lý rủi ro</option>
-          <option value="CL">Nhân viên Nghiên cứu phát triển</option>
+          <option value="Giám đốc Quản lý chất lượng">
+            Giám đốc Quản lý chất lượng
+          </option>
+          <option value="Trưởng phòng Kiểm định chất lượng">
+            Trưởng phòng Kiểm định chất lượng
+          </option>
+          <option value="Nhân viên Kiểm định chất lượng">
+            Nhân viên Kiểm định chất lượng
+          </option>
+          <option value="Nhân viên Quản lý rủi ro">
+            Nhân viên Quản lý rủi ro
+          </option>
+          <option value="Nhân viên Nghiên cứu phát triển">
+            Nhân viên Nghiên cứu phát triển
+          </option>
         </select>
         <button
           type="submit"
@@ -222,6 +267,9 @@ function App() {
                       Phòng ban
                     </th>
                     <th scope="col" className="px-6 py-4">
+                      Chức vụ công việc
+                    </th>
+                    <th scope="col" className="px-6 py-4">
                       Chức năng
                     </th>
                   </tr>
@@ -241,6 +289,9 @@ function App() {
                         </td>
                         <td className="whitespace-nowrap px-6 py-4 font-medium">
                           {employee.roomEmployee}
+                        </td>
+                        <td className="whitespace-nowrap px-6 py-4 font-medium">
+                          {employee.jobTitle}
                         </td>
                         <td className="whitespace-nowrap px-6 py-4">
                           <button
